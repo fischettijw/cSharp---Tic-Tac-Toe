@@ -33,10 +33,11 @@
             // 
             // xPnlTicTacToe
             // 
-            this.xPnlTicTacToe.Location = new System.Drawing.Point(26, 75);
+            this.xPnlTicTacToe.Location = new System.Drawing.Point(0, 80);
             this.xPnlTicTacToe.Name = "xPnlTicTacToe";
             this.xPnlTicTacToe.Size = new System.Drawing.Size(400, 400);
             this.xPnlTicTacToe.TabIndex = 0;
+            this.xPnlTicTacToe.Visible = false;
             // 
             // FrmTicTacToe
             // 
