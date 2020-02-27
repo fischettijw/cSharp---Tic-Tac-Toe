@@ -47,18 +47,13 @@ namespace cSharp___Tic_Tac_Toe
             this.Controls.Add(PnlTicTacToe);
             PnlTicTacToe.Size = new Size(clientWidth, clientWidth);
             PnlTicTacToe.Location = new Point(0,80);
-            PnlTicTacToe.BorderStyle = BorderStyle.FixedSingle;
-
-
-
-
 
         }
 
         public void CreateTicTacToeBoard()
         {
-            int btnSize = xPnlTicTacToe.Width / 4;
-            int btnSpacing = (xPnlTicTacToe.Width - (btnSize * 3)) / 4;
+            int btnSize = PnlTicTacToe.Width / 4;
+            int btnSpacing = (PnlTicTacToe.Width - (btnSize * 3)) / 4;
 
             for (int r = 0; r <= 2; r++)
             {
