@@ -46,7 +46,7 @@ namespace cSharp___Tic_Tac_Toe
 
             this.Controls.Add(PnlTicTacToe);
             PnlTicTacToe.Size = new Size(clientWidth, clientWidth);
-            PnlTicTacToe.Location = new Point(0,80);
+            PnlTicTacToe.Location = new Point(0, 80);
 
         }
 
@@ -59,18 +59,22 @@ namespace cSharp___Tic_Tac_Toe
             {
                 for (int c = 0; c <= 2; c++)
                 {
-                    btnRC[r, c] = new Button();
-                    PnlTicTacToe.Controls.Add(btnRC[r, c]);
-
-                    btnRC[r, c].Text = $"{(r * 3) + c}"; //"X";
-                    btnRC[r, c].TextAlign = ContentAlignment.MiddleCenter;
-                    btnRC[r, c].Font = new Font("Nightclub BTN", 48);
                     int x = (btnSpacing * (c + 1)) + (c * btnSize);
                     int y = (btnSpacing * (r + 1)) + (r * btnSize);
-                    btnRC[r, c].Location = new Point(x, y);
-                    btnRC[r, c].Size = new Size(new Point(btnSize, btnSize));
-
+                       
+                    btnRC[r, c] = new Button()
+                    {
+                        Text = $"{(r * 3) + c}",                          //btnRC[r, c].Text = $"{(r * 3) + c}";
+                        TextAlign = ContentAlignment.MiddleCenter,        //btnRC[r, c].TextAlign = ContentAlignment.MiddleCenter;
+                        Font = new Font("Nightclub BTN", 48),             //btnRC[r, c].Font = new Font("Nightclub BTN", 48);
+                        Location = new Point(x, y),                       //btnRC[r, c].Location = new Point(x, y);
+                        Size = new Size(new Point(btnSize, btnSize)),     //btnRC[r, c].Size = new Size(new Point(btnSize, btnSize));
+                        BackColor = Color.LightGray,                      //btnRC[r, c].BackColor = Color.LightGray;
+                        FlatStyle = FlatStyle.Flat,                       //btnRC[r, c].FlatStyle = FlatStyle.Flat;
+                    };
                     btnRC[r, c].Click += FrmTicTacToe_Click;
+
+                    PnlTicTacToe.Controls.Add(btnRC[r, c]);
                 }
             }
         }
@@ -82,5 +86,5 @@ namespace cSharp___Tic_Tac_Toe
     }
 }
 
-
+// Simple AI
 //https://youtu.be/6CM5x4B6BKA?t=561
