@@ -14,7 +14,7 @@ namespace cSharp___Tic_Tac_Toe
     public partial class FrmTicTacToe : Form
     {
         static Button[,] btnRC = new Button[3, 3];
-        static Panel PnlTicTacToe = new Panel();
+        static Panel PnlTicTacToe;
         static int clientWidth = 400;
         static int clientHeight = 600;
         public FrmTicTacToe()
@@ -26,7 +26,6 @@ namespace cSharp___Tic_Tac_Toe
         {
             CustomizeForm();
             CreateTicTacToeBoard();
-
         }
 
         private void CustomizeForm()
@@ -35,18 +34,23 @@ namespace cSharp___Tic_Tac_Toe
             this.ClientSize = new Size(new Point(clientWidth, clientHeight));
             this.Text = "Tic-Tac-Toe   by Joseph Fischetti";
 
-            Label LblTicTacToeTitle = new Label();
+            Label LblTicTacToeTitle = new Label()
+            {
+                AutoSize = false,
+                Size = new Size(this.ClientSize.Width, 60),
+                Location = new Point(0, 5),
+                Text = "Tic-Tac-Toe",
+                Font = new Font("Nightclub BTN", 36),
+                TextAlign = ContentAlignment.MiddleCenter
+            };
             this.Controls.Add(LblTicTacToeTitle);
-            LblTicTacToeTitle.AutoSize = false;
-            LblTicTacToeTitle.Size = new Size(this.ClientSize.Width, 60);
-            LblTicTacToeTitle.Location = new Point(0, 5);
-            LblTicTacToeTitle.Text = "Tic-Tac-Toe";
-            LblTicTacToeTitle.Font = new Font("Nightclub BTN", 36);
-            LblTicTacToeTitle.TextAlign = ContentAlignment.MiddleCenter;
 
+            PnlTicTacToe = new Panel()
+            {
+                Size = new Size(clientWidth, clientWidth),
+                Location = new Point(0, 80),
+            };
             this.Controls.Add(PnlTicTacToe);
-            PnlTicTacToe.Size = new Size(clientWidth, clientWidth);
-            PnlTicTacToe.Location = new Point(0, 80);
 
         }
 
@@ -61,16 +65,16 @@ namespace cSharp___Tic_Tac_Toe
                 {
                     int x = (btnSpacing * (c + 1)) + (c * btnSize);
                     int y = (btnSpacing * (r + 1)) + (r * btnSize);
-                       
+
                     btnRC[r, c] = new Button()
                     {
-                        Text = $"{(r * 3) + c}",                          //btnRC[r, c].Text = $"{(r * 3) + c}";
-                        TextAlign = ContentAlignment.MiddleCenter,        //btnRC[r, c].TextAlign = ContentAlignment.MiddleCenter;
-                        Font = new Font("Nightclub BTN", 48),             //btnRC[r, c].Font = new Font("Nightclub BTN", 48);
-                        Location = new Point(x, y),                       //btnRC[r, c].Location = new Point(x, y);
-                        Size = new Size(new Point(btnSize, btnSize)),     //btnRC[r, c].Size = new Size(new Point(btnSize, btnSize));
-                        BackColor = Color.LightGray,                      //btnRC[r, c].BackColor = Color.LightGray;
-                        FlatStyle = FlatStyle.Flat,                       //btnRC[r, c].FlatStyle = FlatStyle.Flat;
+                        Text = $"{(r * 3) + c}",
+                        TextAlign = ContentAlignment.MiddleCenter,
+                        Font = new Font("Nightclub BTN", 48),
+                        Location = new Point(x, y),
+                        Size = new Size(new Point(btnSize, btnSize)),
+                        BackColor = Color.LightGray,
+                        FlatStyle = FlatStyle.Flat,
                     };
                     btnRC[r, c].Click += FrmTicTacToe_Click;
 
