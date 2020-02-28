@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Media;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -15,8 +16,11 @@ namespace cSharp___Tic_Tac_Toe
     {
         static readonly Button[,] btnRC = new Button[3, 3];
         static Panel PnlTicTacToe;
+        static Label LblCurrentPlayer;
         static readonly int clientWidth = 400;
         static readonly int clientHeight = clientWidth + 100;
+        static string player = "X";
+
         public FrmTicTacToe()
         {
             InitializeComponent();
@@ -36,6 +40,8 @@ namespace cSharp___Tic_Tac_Toe
             this.MinimizeBox = true;
             this.MinimumSize = new Size(this.Width, this.Height);
 
+            this.Icon = Properties.Resources.TicTacToe;
+
             int sW = Screen.PrimaryScreen.WorkingArea.Width;
             int sH = Screen.PrimaryScreen.WorkingArea.Height;
             int fW = this.Width;
@@ -47,13 +53,25 @@ namespace cSharp___Tic_Tac_Toe
             Label LblTicTacToeTitle = new Label()
             {
                 AutoSize = false,
-                Size = new Size(this.ClientSize.Width, 60),
+                Size = new Size(clientWidth, 60),
                 Location = new Point(0, 5),
                 Text = "Tic-Tac-Toe",
                 Font = new Font("Nightclub BTN", 36),
                 TextAlign = ContentAlignment.MiddleCenter
             };
             this.Controls.Add(LblTicTacToeTitle);
+
+            LblCurrentPlayer = new Label()
+            {
+                AutoSize = false,
+                Size = new Size(clientWidth, 30),
+                Location = new Point(0, clientHeight - 36),
+                Text = "Current Player - X",
+                Font = new Font("Nightclub BTN", 18),
+                TextAlign = ContentAlignment.MiddleCenter
+            };
+
+            this.Controls.Add(LblCurrentPlayer);
 
             PnlTicTacToe = new Panel()
             {
@@ -78,7 +96,7 @@ namespace cSharp___Tic_Tac_Toe
 
                     btnRC[r, c] = new Button()
                     {
-                        Text = $"{(r * 3) + c}",
+                        Text = "",
                         TextAlign = ContentAlignment.MiddleCenter,
                         Font = new Font("Nightclub BTN", 48),
                         Location = new Point(x, y),
@@ -89,13 +107,25 @@ namespace cSharp___Tic_Tac_Toe
                     PnlTicTacToe.Controls.Add(btnRC[r, c]);
 
                     btnRC[r, c].Click += FrmTicTacToe_Click;
+
                 }
             }
         }
 
+
         public void FrmTicTacToe_Click(object sender, EventArgs e)
         {
-            MessageBox.Show((sender as Button).Text);
+            if ((sender as Button).Text == "")
+            {
+                (sender as Button).Text = player;
+            }
+            else
+            {
+                SystemSounds.Beep.Play(); return;
+            }
+
+            player = (player == "X") ? "O" : "X";
+            LblCurrentPlayer.Text = $"Current Player - {player}";
         }
     }
 }
