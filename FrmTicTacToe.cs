@@ -54,7 +54,7 @@ namespace cSharp___Tic_Tac_Toe
             {
                 AutoSize = false,
                 Size = new Size(clientWidth, 60),
-                Location = new Point(0, 5),
+                Location = new Point(0, 18),
                 Text = "Tic-Tac-Toe",
                 Font = new Font("Nightclub BTN", 36),
                 TextAlign = ContentAlignment.MiddleCenter
@@ -112,20 +112,58 @@ namespace cSharp___Tic_Tac_Toe
             }
         }
 
-
         public void FrmTicTacToe_Click(object sender, EventArgs e)
         {
-            if ((sender as Button).Text == "")
+            if ((sender as Button).Text != "") { SystemSounds.Beep.Play(); return; }
+            (sender as Button).Text = player;
+
+            if (HasGameBeenWon())
             {
-                (sender as Button).Text = player;
+                MessageBox.Show($"Player {player} HAS WON !!!");
+                Task.Delay(5000);
+                Application.Exit();
             }
-            else
+
+            if (IsGameTied())
             {
-                SystemSounds.Beep.Play(); return;
+                MessageBox.Show("YOU ARE TIED !!!");
+                Task.Delay(5000);
+                Application.Exit();
             }
 
             player = (player == "X") ? "O" : "X";
             LblCurrentPlayer.Text = $"Current Player - {player}";
+        }
+
+        private bool HasGameBeenWon()
+        {          
+            string[] row = new string[3];
+            string[] col = new string[3];
+            string fDiag;
+            string bDiag;
+
+            for (int i = 0; i < 3; i++)
+            {
+                row[i] = btnRC[i, 0].Text + btnRC[i, 1].Text + btnRC[i, 2].Text;
+                if (row[i] == "XXX" | row[i] == "OOO") return true;
+                col[i] = btnRC[0, i].Text + btnRC[1, i].Text + btnRC[2, i].Text;
+                if (col[i] == "XXX" | col[i] == "OOO") return true;
+            }
+            bDiag = btnRC[0, 0].Text + btnRC[1, 1].Text + btnRC[2, 2].Text;
+            if (bDiag == "XXX" | bDiag == "OOO") return true;
+            fDiag = btnRC[2, 0].Text + btnRC[1, 1].Text + btnRC[0, 2].Text;
+            if (fDiag == "XXX" | fDiag == "OOO") return true;
+                                 
+            return false;
+        }
+
+        private static bool IsGameTied()
+        {
+            foreach (Button btn in btnRC)
+            {
+                if (btn.Text == "") { return false; }
+            }
+            return true;
         }
     }
 }
