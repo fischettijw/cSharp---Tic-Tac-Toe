@@ -76,9 +76,9 @@ namespace cSharp___Tic_Tac_Toe
                         BackColor = Color.LightGray,
                         FlatStyle = FlatStyle.Flat,
                     };
-                    btnRC[r, c].Click += FrmTicTacToe_Click;
-
                     PnlTicTacToe.Controls.Add(btnRC[r, c]);
+
+                    btnRC[r, c].Click += FrmTicTacToe_Click;
                 }
             }
         }
