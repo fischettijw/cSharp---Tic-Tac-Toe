@@ -100,5 +100,10 @@ namespace cSharp___Tic_Tac_Toe
     }
 }
 
-// Simple AI
+//      Simple AI for Computer Player
+//priority 1:  can computer player get tick tac toe
+//priority 2:  block opponent tic tac toe
+//priority 3:  go for corner space
+//priority 4:  pick open space
+
 //https://youtu.be/6CM5x4B6BKA?t=561
