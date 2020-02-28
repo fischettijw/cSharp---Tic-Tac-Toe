@@ -13,10 +13,10 @@ namespace cSharp___Tic_Tac_Toe
 
     public partial class FrmTicTacToe : Form
     {
-        static Button[,] btnRC = new Button[3, 3];
+        static readonly Button[,] btnRC = new Button[3, 3];
         static Panel PnlTicTacToe;
-        static int clientWidth = 400;
-        static int clientHeight = 600;
+        static readonly int clientWidth = 400;
+        static readonly int clientHeight = clientWidth + 100;
         public FrmTicTacToe()
         {
             InitializeComponent();
@@ -28,10 +28,20 @@ namespace cSharp___Tic_Tac_Toe
             CreateTicTacToeBoard();
         }
 
-        private void CustomizeForm()
+        public void CustomizeForm()
         {
-
             this.ClientSize = new Size(new Point(clientWidth, clientHeight));
+            this.MaximizeBox = false;
+            this.MaximumSize = new Size(this.Width, this.Height);
+            this.MinimizeBox = true;
+            this.MinimumSize = new Size(this.Width, this.Height);
+
+            int sW = Screen.PrimaryScreen.WorkingArea.Width;
+            int sH = Screen.PrimaryScreen.WorkingArea.Height;
+            int fW = this.Width;
+            int fH = this.Height;
+            this.Location = new Point((sW - fW) / 2, (sH - fH) / 2);
+
             this.Text = "Tic-Tac-Toe   by Joseph Fischetti";
 
             Label LblTicTacToeTitle = new Label()
@@ -83,7 +93,7 @@ namespace cSharp___Tic_Tac_Toe
             }
         }
 
-        private void FrmTicTacToe_Click(object sender, EventArgs e)
+        public void FrmTicTacToe_Click(object sender, EventArgs e)
         {
             MessageBox.Show((sender as Button).Text);
         }
