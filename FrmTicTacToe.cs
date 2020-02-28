@@ -107,7 +107,6 @@ namespace cSharp___Tic_Tac_Toe
                     PnlTicTacToe.Controls.Add(btnRC[r, c]);
 
                     btnRC[r, c].Click += FrmTicTacToe_Click;
-
                 }
             }
         }
@@ -120,23 +119,29 @@ namespace cSharp___Tic_Tac_Toe
             if (HasGameBeenWon())
             {
                 MessageBox.Show($"Player {player} HAS WON !!!");
-                Task.Delay(5000);
-                Application.Exit();
+                ClearBoardForAnotherGame();
             }
 
             if (IsGameTied())
             {
                 MessageBox.Show("YOU ARE TIED !!!");
-                Task.Delay(5000);
-                Application.Exit();
+                ClearBoardForAnotherGame();
             }
 
             player = (player == "X") ? "O" : "X";
             LblCurrentPlayer.Text = $"Current Player - {player}";
         }
 
+        private void ClearBoardForAnotherGame()
+        {
+            foreach (Button btn in btnRC)
+            {
+                btn.Text = "";
+            }
+        }
+
         private bool HasGameBeenWon()
-        {          
+        {
             string[] row = new string[3];
             string[] col = new string[3];
             string fDiag;
@@ -153,7 +158,7 @@ namespace cSharp___Tic_Tac_Toe
             if (bDiag == "XXX" | bDiag == "OOO") return true;
             fDiag = btnRC[2, 0].Text + btnRC[1, 1].Text + btnRC[0, 2].Text;
             if (fDiag == "XXX" | fDiag == "OOO") return true;
-                                 
+
             return false;
         }
 
