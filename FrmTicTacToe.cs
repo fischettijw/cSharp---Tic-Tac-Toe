@@ -17,7 +17,7 @@ namespace cSharp___Tic_Tac_Toe
         static readonly Button[,] btnRC = new Button[3, 3];
         static Panel PnlTicTacToe;
         static Label LblCurrentPlayer;
-        static readonly int clientWidth = 400;
+        static readonly int clientWidth = 600;
         static readonly int clientHeight = clientWidth + 100;
         static string player = "X";
 
