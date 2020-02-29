@@ -134,7 +134,7 @@ namespace cSharp___Tic_Tac_Toe
 
         private void ClearBoardForAnotherGame()
         {
-            DialogResult yn = MessageBox.Show("Play Another Game?","Tic-Tac-Toe Game is Over",  MessageBoxButtons.YesNo);
+            DialogResult yn = MessageBox.Show("Play Another Game?", "Tic-Tac-Toe Game is Over", MessageBoxButtons.YesNo);
             if (yn == DialogResult.Yes)
             {
                 foreach (Button btn in btnRC)
