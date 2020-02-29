@@ -17,7 +17,7 @@ namespace cSharp___Tic_Tac_Toe
         static readonly Button[,] btnRC = new Button[3, 3];
         static Panel PnlTicTacToe;
         static Label LblCurrentPlayer;
-        static readonly int clientWidth = 600;
+        static readonly int clientWidth = 400;
         static readonly int clientHeight = clientWidth + 100;
         static string player = "X";
 
@@ -107,9 +107,22 @@ namespace cSharp___Tic_Tac_Toe
                     PnlTicTacToe.Controls.Add(btnRC[r, c]);
 
                     btnRC[r, c].Click += FrmTicTacToe_Click;
+                    //btnRC[r, c].MouseEnter += FrmTicTacToe_MouseEnter;
+                    //btnRC[r, c].MouseLeave += FrmTicTacToe_MouseLeave;
+
                 }
             }
         }
+
+        //private void FrmTicTacToe_MouseEnter(object sender, EventArgs e)
+        //{
+        //    (sender as Button).Text = player;
+        //}
+
+        //private void FrmTicTacToe_MouseLeave(object sender, EventArgs e)
+        //{
+        //    (sender as Button).Text = "";
+        //}
 
         public void FrmTicTacToe_Click(object sender, EventArgs e)
         {
