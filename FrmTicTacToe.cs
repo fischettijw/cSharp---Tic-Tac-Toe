@@ -20,6 +20,7 @@ namespace cSharp___Tic_Tac_Toe
         static readonly int clientWidth = 400;
         static readonly int clientHeight = clientWidth + 100;
         static string player = "X";
+        //static bool mouseOverFlag = false;
 
         public FrmTicTacToe()
         {
@@ -103,6 +104,7 @@ namespace cSharp___Tic_Tac_Toe
                         Size = new Size(new Point(btnSize, btnSize)),
                         BackColor = Color.LightGray,
                         FlatStyle = FlatStyle.Flat,
+                        Tag = "",
                     };
                     PnlTicTacToe.Controls.Add(btnRC[r, c]);
 
@@ -116,17 +118,30 @@ namespace cSharp___Tic_Tac_Toe
 
         //private void FrmTicTacToe_MouseEnter(object sender, EventArgs e)
         //{
-        //    (sender as Button).Text = player;
+        //    if ((sender as Button).Text == "")
+        //    {
+        //        (sender as Button).Text = player;
+        //        mouseOverFlag = true;
+        //    }
+        //    else
+        //    {
+        //        mouseOverFlag = false;
+        //    }
+
         //}
 
         //private void FrmTicTacToe_MouseLeave(object sender, EventArgs e)
         //{
-        //    (sender as Button).Text = "";
+        //    if (mouseOverFlag) { (sender as Button).Text = ""; }
+        //    mouseOverFlag = false;
         //}
 
         public void FrmTicTacToe_Click(object sender, EventArgs e)
         {
-            if ((sender as Button).Text != "") { SystemSounds.Beep.Play(); return; }
+            if ((sender as Button).Text != "")
+            {
+                SystemSounds.Beep.Play(); return;
+            }
             (sender as Button).Text = player;
 
             if (HasGameBeenWon())
