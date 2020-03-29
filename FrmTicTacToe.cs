@@ -16,13 +16,10 @@ namespace cSharp___Tic_Tac_Toe
     {
         static readonly Button[,] btnRC = new Button[3, 3];
         static Panel PnlTicTacToe;
-        static Label LblCurrentPlayer;
         static readonly int clientWidth = 400;
         static readonly int clientHeight = clientWidth + 100;
-        static string player = "X";
-        //static bool mouseOverFlag = false;
 
-        public FrmTicTacToe()
+         public FrmTicTacToe()
         {
             InitializeComponent();
         }
@@ -62,18 +59,6 @@ namespace cSharp___Tic_Tac_Toe
             };
             this.Controls.Add(LblTicTacToeTitle);
 
-            LblCurrentPlayer = new Label()
-            {
-                AutoSize = false,
-                Size = new Size(clientWidth, 30),
-                Location = new Point(0, clientHeight - 36),
-                Text = "Current Player - X",
-                Font = new Font("Nightclub BTN", 18),
-                TextAlign = ContentAlignment.MiddleCenter
-            };
-
-            this.Controls.Add(LblCurrentPlayer);
-
             PnlTicTacToe = new Panel()
             {
                 Size = new Size(clientWidth, clientWidth),
@@ -109,55 +94,64 @@ namespace cSharp___Tic_Tac_Toe
                     PnlTicTacToe.Controls.Add(btnRC[r, c]);
 
                     btnRC[r, c].Click += FrmTicTacToe_Click;
-                    //btnRC[r, c].MouseEnter += FrmTicTacToe_MouseEnter;
-                    //btnRC[r, c].MouseLeave += FrmTicTacToe_MouseLeave;
+
 
                 }
             }
         }
 
-        //private void FrmTicTacToe_MouseEnter(object sender, EventArgs e)
-        //{
-        //    if ((sender as Button).Text == "")
-        //    {
-        //        (sender as Button).Text = player;
-        //        mouseOverFlag = true;
-        //    }
-        //    else
-        //    {
-        //        mouseOverFlag = false;
-        //    }
-
-        //}
-
-        //private void FrmTicTacToe_MouseLeave(object sender, EventArgs e)
-        //{
-        //    if (mouseOverFlag) { (sender as Button).Text = ""; }
-        //    mouseOverFlag = false;
-        //}
 
         public void FrmTicTacToe_Click(object sender, EventArgs e)
         {
+            // Player is Human if entering via Button Click
             if ((sender as Button).Text != "")
             {
                 SystemSounds.Beep.Play(); return;
             }
-            (sender as Button).Text = player;
+            { (sender as Button).Text = "X"; }
 
             if (HasGameBeenWon())
             {
-                MessageBox.Show($"Player {player} HAS WON !!!");
+                MessageBox.Show($"Human has WON !!!");
                 ClearBoardForAnotherGame();
             }
 
             if (IsGameTied())
             {
-                MessageBox.Show("YOU ARE TIED !!!");
+                MessageBox.Show("COMPUTER and HUMAN have TIED !!!");
                 ClearBoardForAnotherGame();
             }
 
-            player = (player == "X") ? "O" : "X";
-            LblCurrentPlayer.Text = $"Current Player - {player}";
+            ComputerPlayer();
+        }
+
+        private void ComputerPlayer()
+        {
+            NextAvailableButton();
+        }
+
+        private void NextAvailableButton()
+        {
+            foreach (Button btn in btnRC)
+            {
+
+                if (btn.Text == "")
+                {
+                    btn.Text = "C";
+                    if (HasGameBeenWon())
+                    {
+                        MessageBox.Show("Computer has WON !!!");
+                        ClearBoardForAnotherGame();
+                    }
+
+                    if (IsGameTied())
+                    {
+                        MessageBox.Show("COMPUTER and HUMAN have TIED !!!");
+                        ClearBoardForAnotherGame();
+                    }
+                    break;
+                }
+            }
         }
 
         private void ClearBoardForAnotherGame()
@@ -184,14 +178,14 @@ namespace cSharp___Tic_Tac_Toe
             for (int i = 0; i < 3; i++)
             {
                 row[i] = btnRC[i, 0].Text + btnRC[i, 1].Text + btnRC[i, 2].Text;
-                if (row[i] == "XXX" | row[i] == "OOO") return true;
+                if (row[i] == "XXX" | row[i] == "CCC") return true;
                 col[i] = btnRC[0, i].Text + btnRC[1, i].Text + btnRC[2, i].Text;
-                if (col[i] == "XXX" | col[i] == "OOO") return true;
+                if (col[i] == "XXX" | col[i] == "CCC") return true;
             }
             bDiag = btnRC[0, 0].Text + btnRC[1, 1].Text + btnRC[2, 2].Text;
-            if (bDiag == "XXX" | bDiag == "OOO") return true;
+            if (bDiag == "XXX" | bDiag == "CCC") return true;
             fDiag = btnRC[2, 0].Text + btnRC[1, 1].Text + btnRC[0, 2].Text;
-            if (fDiag == "XXX" | fDiag == "OOO") return true;
+            if (fDiag == "XXX" | fDiag == "CCC") return true;
 
             return false;
         }
