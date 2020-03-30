@@ -18,8 +18,9 @@ namespace cSharp___Tic_Tac_Toe
         static Panel PnlTicTacToe;
         static readonly int clientWidth = 400;
         static readonly int clientHeight = clientWidth + 100;
+        static Timer TimComputerPlayer;
 
-         public FrmTicTacToe()
+        public FrmTicTacToe()
         {
             InitializeComponent();
         }
@@ -66,6 +67,19 @@ namespace cSharp___Tic_Tac_Toe
             };
             this.Controls.Add(PnlTicTacToe);
 
+            TimComputerPlayer = new Timer()
+            {
+                Enabled = false,
+                Interval = 1000
+            };
+
+            TimComputerPlayer.Tick += TimComputerPlayer_Tick;
+
+        }
+
+        private void TimComputerPlayer_Tick(object sender, EventArgs e)
+        {
+            ComputerPlayer();
         }
 
         public void CreateTicTacToeBoard()
@@ -122,11 +136,13 @@ namespace cSharp___Tic_Tac_Toe
                 ClearBoardForAnotherGame();
             }
 
-            ComputerPlayer();
+            TimComputerPlayer.Enabled = true;
+            //ComputerPlayer();
         }
 
         private void ComputerPlayer()
         {
+            TimComputerPlayer.Enabled = false;
             NextAvailableButton();
         }
 
