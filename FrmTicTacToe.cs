@@ -19,6 +19,11 @@ namespace cSharp___Tic_Tac_Toe
         static readonly int clientWidth = 400;
         static readonly int clientHeight = clientWidth + 100;
         static Timer TimComputerPlayer;
+        static Label LblComputerPlayer;
+        static int rowWon;
+        static int colWon;
+        static string diagWon;
+
 
         public FrmTicTacToe()
         {
@@ -60,6 +65,19 @@ namespace cSharp___Tic_Tac_Toe
             };
             this.Controls.Add(LblTicTacToeTitle);
 
+            LblComputerPlayer = new Label()
+            {
+                AutoSize = false,
+                Size = new Size(clientWidth, 30),
+                Location = new Point(0, clientHeight - 36),
+                Text = "Human Player's Turn",
+                Font = new Font("Nightclub BTN", 18),
+                TextAlign = ContentAlignment.MiddleCenter
+            };
+
+            this.Controls.Add(LblComputerPlayer);
+
+
             PnlTicTacToe = new Panel()
             {
                 Size = new Size(clientWidth, clientWidth),
@@ -70,7 +88,7 @@ namespace cSharp___Tic_Tac_Toe
             TimComputerPlayer = new Timer()
             {
                 Enabled = false,
-                Interval = 1000
+                Interval = 2000
             };
 
             TimComputerPlayer.Tick += TimComputerPlayer_Tick;
@@ -109,7 +127,6 @@ namespace cSharp___Tic_Tac_Toe
 
                     btnRC[r, c].Click += FrmTicTacToe_Click;
 
-
                 }
             }
         }
@@ -117,6 +134,8 @@ namespace cSharp___Tic_Tac_Toe
 
         public void FrmTicTacToe_Click(object sender, EventArgs e)
         {
+            if (TimComputerPlayer.Enabled) return;
+
             // Player is Human if entering via Button Click
             if ((sender as Button).Text != "")
             {
@@ -135,15 +154,49 @@ namespace cSharp___Tic_Tac_Toe
                 MessageBox.Show("COMPUTER and HUMAN have TIED !!!");
                 ClearBoardForAnotherGame();
             }
-
-            TimComputerPlayer.Enabled = true;
-            //ComputerPlayer();
+            LblComputerPlayer.Text = "Computer Player THINKING";
+            TimComputerPlayer.Enabled = true;            //ComputerPlayer();
         }
 
         private void ComputerPlayer()
         {
-            TimComputerPlayer.Enabled = false;
+            if (TryToWinOrBlock()) 
+            {
+                TimComputerPlayer.Enabled = false;
+                MessageBox.Show($"Computer has WON !!!");
+                LblComputerPlayer.Text = "Human Player's Turn";
+                ClearBoardForAnotherGame();
+                return; 
+            };
+            if (btnRC[1, 1].Text == "")
+            {
+                btnRC[1, 1].Text = "C";
+                TimComputerPlayer.Enabled = false;
+                LblComputerPlayer.Text = "Human Player's Turn";
+                return;
+                //if (HasGameBeenWon()) { return; };
+            }
+            if (HasGameBeenWon()) { return; };
             NextAvailableButton();
+            TimComputerPlayer.Enabled = false;
+            LblComputerPlayer.Text = "Human Player's Turn";
+        }
+
+        private bool TryToWinOrBlock()
+        {
+            foreach (Button btn in btnRC)
+            {
+                if (btn.Text == "")
+                {
+                    btn.Text = "C";
+                    if (HasGameBeenWon()) 
+                    { 
+                        return true; 
+                    };
+                    btn.Text = "";
+                }
+            }
+            return false;
         }
 
         private void NextAvailableButton()
@@ -156,7 +209,7 @@ namespace cSharp___Tic_Tac_Toe
                     btn.Text = "C";
                     if (HasGameBeenWon())
                     {
-                        MessageBox.Show("Computer has WON !!!");
+                        MessageBox.Show($"Computer has WON !!!");
                         ClearBoardForAnotherGame();
                     }
 
@@ -190,18 +243,19 @@ namespace cSharp___Tic_Tac_Toe
             string[] col = new string[3];
             string fDiag;
             string bDiag;
+            rowWon = -1; colWon = -1; diagWon = "";
 
             for (int i = 0; i < 3; i++)
             {
                 row[i] = btnRC[i, 0].Text + btnRC[i, 1].Text + btnRC[i, 2].Text;
-                if (row[i] == "XXX" | row[i] == "CCC") return true;
+                if (row[i] == "XXX" | row[i] == "CCC") { rowWon = i; return true; };
                 col[i] = btnRC[0, i].Text + btnRC[1, i].Text + btnRC[2, i].Text;
-                if (col[i] == "XXX" | col[i] == "CCC") return true;
+                if (col[i] == "XXX" | col[i] == "CCC") { colWon = i; return true; };
             }
             bDiag = btnRC[0, 0].Text + btnRC[1, 1].Text + btnRC[2, 2].Text;
-            if (bDiag == "XXX" | bDiag == "CCC") return true;
+            if (bDiag == "XXX" | bDiag == "CCC") { diagWon = "B"; return true; };
             fDiag = btnRC[2, 0].Text + btnRC[1, 1].Text + btnRC[0, 2].Text;
-            if (fDiag == "XXX" | fDiag == "CCC") return true;
+            if (fDiag == "XXX" | fDiag == "CCC") { diagWon = "F"; return true; };
 
             return false;
         }
@@ -216,4 +270,13 @@ namespace cSharp___Tic_Tac_Toe
         }
     }
 }
+
+
+//https://www.youtube.com/watch?v=6CM5x4B6BKA&t=553s
+
+//1) Get TicTacToe
+//2) Block TicTacToe
+//3) Go in center
+//4) Go in corner
+//5) Go in any other space
 
