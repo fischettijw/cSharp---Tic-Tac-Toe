@@ -193,6 +193,19 @@ namespace cSharp___Tic_Tac_Toe
                     { 
                         return true; 
                     };
+
+                    btn.Text = "X";
+                    if (HasGameBeenWon())
+                    {
+                        btn.Text = "C";
+                        TimComputerPlayer.Enabled = false;
+                        LblComputerPlayer.Text = "Human Player's Turn";
+                        return false;
+                    };
+
+
+
+
                     btn.Text = "";
                 }
             }
